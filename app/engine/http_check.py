@@ -12,7 +12,7 @@ class HTTPCheck(EngineCheck):
     
     def run_check(self):
         try:
-            requests.get('http://{}/{}'.format(self.ip_addr, self.uri))
+            requests.get('http://{}/{}'.format(self.ip_addr, self.uri), timeout=self.timeout)
             return True        
         except Exception as e:
             return str(e)

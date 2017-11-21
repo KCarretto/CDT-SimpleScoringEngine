@@ -17,7 +17,7 @@ DB_HOST = 'localhost'
 DB_PORT = 27017
 
 # Document Settings
-MAX_FIELD_LEN = 200
+MAX_FIELD_LEN = 5000
 MAX_LOG_LEN = 5000
 MAX_RESULTS = 500
 

@@ -19,7 +19,7 @@ class SMTPCheck(EngineCheck):
         message['From'] = sender_address
         message['To'] = recipient_address
         try:
-            smtp = SMTP(self.ip_addr)
+            smtp = SMTP(self.ip_addr, timeout=self.timeout)
             smtp.login(self.user, self.password)
             smtp.sendmail(sender_address, recipient_address, message.as_string())
             smtp.quit()

@@ -14,12 +14,14 @@ from config import HTTP_SERVER, HTTP_POINTS, HTTP_URI
 from config import DNS_SERVER, DNS_POINTS
 from config import SSH_SERVERS, SSH_POINTS, SSH_USER, SSH_PASSWORD
 from config import FTP_SERVER, FTP_POINTS, FTP_USER, FTP_PASSWORD
+from config import SMTP_SERVER, SMTP_POINTS, SMTP_USER, SMTP_PASSWORD
 from config import ICMP_SERVERS, ICMP_POINTS
 
 from http_check import HTTPCheck 
 from dns_check import DNSCheck
 from ssh_check import SSHCheck
 from ftp_check import FTPCheck
+from smtp_check import SMTPCheck
 from icmp_check import ICMPCheck
 
 class Worker (Thread):
@@ -73,6 +75,9 @@ class Engine(Thread):
                 info("Stopping scoring engine", "engine")
                 self.flush_checks(threads)
                 break
+            
+            info("Starting scoring round", "engine")
+
 
             # HTTP Check Thread
             info("Spawning HTTP check worker", "engine")
@@ -97,6 +102,12 @@ class Engine(Thread):
             ftpCheck = Worker(FTPCheck, FTP_SERVER, FTP_POINTS, user=FTP_USER, password=FTP_PASSWORD)
             ftpCheck.start()
             threads.append(ftpCheck)
+
+            # SMTP Check Thread
+            info("Spawning SMTP check worker", "engine")
+            smtpCheck = Worker(SMTPCheck, SMTP_SERVER, SMTP_POINTS, user=SMTP_USER, password=SMTP_PASSWORD)
+            smtpCheck.start()
+            threads.append(smtpCheck)
 
             # ICMP Check Thread
             info("Spawning ICMP check worker", "engine")
