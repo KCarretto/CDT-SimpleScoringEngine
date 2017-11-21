@@ -18,4 +18,8 @@ except MongoEngineConnectionError as e:
     print("ERROR: Could not connect to database")
     sys.exit()
 
+from engine.engine import Engine
+eng = Engine()
+eng.start()
+
 from . import views

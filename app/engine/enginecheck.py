@@ -1,10 +1,11 @@
 """
 A class for all scoring engine checks to inherit from.
 """
+import time
+
 from ..models.check import Check
 from ..logger import *
 
-import time
 
 class EngineCheck(object):
     def __init__(self, check_type, ip_addr, points):
