@@ -6,15 +6,14 @@ import ftplib
 from enginecheck import EngineCheck
 
 class FTPCheck(EngineCheck):
-    def __init__(self, ip_addr, points, user, password):
-        self.user = user
-        self.password = password
-        self.ip_addr = self.ip_addr
-        EngineCheck.__init__('FTP', self.ip_addr, points)
+    def __init__(self, params):
+        self.user = params['user']
+        self.password = params['password']
+        EngineCheck.__init__(self, 'FTP', params['ip_addr'], params['points'])
     
     def run_check(self):
         try:
-            server = ftplib.FTP(self.ip_addr)
+            server = ftplib.FTP(self.ip_addr, timeout=self.timeout)
             server.login(user=self.user, passwd=self.password)
             server.retrlines('LIST')
             server.quit()

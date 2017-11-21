@@ -30,6 +30,9 @@ SCORED_CHECKS = [
     'AD',
     'DNS',
     'HTTP',
+    'FTP',
+    'SSH',
+    'ICMP',
 ]
 
 

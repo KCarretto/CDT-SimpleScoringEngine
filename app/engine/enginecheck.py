@@ -5,6 +5,7 @@ import time
 
 from ..models.check import Check
 from ..logger import *
+from .config import CHECK_TIMEOUT
 
 
 class EngineCheck(object):
@@ -18,6 +19,7 @@ class EngineCheck(object):
         self.check_type = check_type
         self.ip_addr = ip_addr
         self.points = points
+        self.timeout = CHECK_TIMEOUT
 
         info("Running check {} on {}".format(self.check_type, self.ip_addr), "engine")
 
@@ -36,7 +38,6 @@ class EngineCheck(object):
         passed: True or False, whether the check suceeded or not.
         status: A message describing why the check failed. If the check passed, you may leave this as None.
         """
-
         c = Check(
             start_time=self.start_time,
             end_time=time.time(),

@@ -21,9 +21,13 @@ def crit(msg, application=None):
 
 def _log(level, msg, application=None):
     timestamp = time.time()
+    if application is None:
+        application = "Unknown"
     print("[{}]{}:{}:\t{}".format(timestamp, level, application, msg))
     l = Log(
         timestamp=timestamp,
         application=application,
         level=level,
+        message=msg
     )
+    l.save()

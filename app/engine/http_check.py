@@ -6,9 +6,9 @@ import requests
 from enginecheck import EngineCheck
 
 class HTTPCheck(EngineCheck):
-    def __init__(self, ip_addr, points, uri):
-        self.uri = uri
-        EngineCheck.__init__(self, 'HTTP', ip_addr, points)
+    def __init__(self, params):
+        self.uri = params['uri']
+        EngineCheck.__init__(self, 'HTTP', params['ip_addr'], params['points'])
     
     def run_check(self):
         try:

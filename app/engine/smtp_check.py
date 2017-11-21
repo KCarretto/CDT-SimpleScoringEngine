@@ -6,11 +6,10 @@ from email.mime.text import MIMEText
 from enginecheck import EngineCheck
 
 class SMTPCheck(EngineCheck):
-    def __init__(self, ip_addr, points, user, password):
-        self.user = user
-        self.password = password
-        self.ip_addr = ip_addr
-        EngineCheck.__init__('SMTP', self.ip_addr, points)
+    def __init__(self, params):
+        self.user = params['user']
+        self.password = params['password']
+        EngineCheck.__init__(self, 'SMTP', params['ip_addr'], params['points'])
     
     def run_check(self):
         sender_address = "{}@chucke.cheese".format(self.user)
