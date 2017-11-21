@@ -9,7 +9,8 @@ class SSHCheck(EngineCheck):
     def __init__(self, ip_addr, points, user, password):
         self.user = user
         self.password = password
-        EngineCheck.__init__('SSH', ip_addr, points)
+        self.ip_addr = ip_addr
+        EngineCheck.__init__('SSH', self.ip_addr, points)
     
     def run_check(self):
         ssh = paramiko.SSHClient()
