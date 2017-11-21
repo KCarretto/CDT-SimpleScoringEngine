@@ -83,7 +83,13 @@ def api_round():
     for check in SCORED_CHECKS:
         last_round = Check.objects(check_type=check).order_by('-id').first()
         if last_round is None:
-            checks.append({'status': 'unchecked'})
+            checks.append(
+                {
+                    'check_type': check,
+                    'passed': False,
+                    'check_status': 'Frozen',
+                    'frozen': True
+                })
         else:
             checks.append(last_round.get_document())
 

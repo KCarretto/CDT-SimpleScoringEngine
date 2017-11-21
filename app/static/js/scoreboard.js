@@ -1,46 +1,49 @@
 
 function build_scoreboard() {
-    var scoreboard = document.getElementById("scoreboard");
-    
+    var oldscoreboard = document.getElementById("scoreboard");
+    var scoreboard = oldscoreboard.cloneNode(true);
+
     // Clear scoreboard
-    while (scoreboard.firstChild) {
-        scoreboard.removeChild(scoreboard.firstChild);
+    while (scoreboard.hasChildNodes()) {
+        scoreboard.removeChild(scoreboard.lastChild);
     }
 
-    scoretable = document.createElement("table");
-    scoreboard.appendChild(scoretable);
-
+    // Rebuild scoreboard
     tablehead = document.createElement("thead");
-    scoretable.appendChild(tablehead);
+    scoreboard.appendChild(tablehead);
+    tableheadrow = document.createElement("tr");
+    tablehead.appendChild(tableheadrow);
+    tablestatusrow = document.createElement("tr");
+    scoreboard.appendChild(tablestatusrow);
 
     // Fetch new scoreboard data
     var scoredata;
-    $.getJSON("/api/round", function(json){
-        scoredataa = json;
-    });
+    $.getJSON("/api/round", 
+        function(json) {
+            // Fill in table with statuses
+            for (i in json.checks) {
+                header = document.createElement("th");
+                header.innerText = json.checks[i].check_type;
+                tableheadrow.appendChild(header);
 
-    var oldTable = document.getElementById('scoretable'),
-    newTable = oldTable.cloneNode(true);
-    
-    for(var i = 0; i < json_example.length; i++){
-        var tr = document.createElement('tr');
-        for(var j = 0; j < json_example[i].length; j++){
-            var td = document.createElement('td');
-            td.appendChild(document.createTextNode(json_example[i][j]));
-            tr.appendChild(td);
+                statusNode = document.createElement("td");
+                statusNode.innerText = json.checks[i].check_status;
+                tablestatusrow.appendChild(statusNode);
+            }
+
+            oldscoreboard.parentNode.replaceChild(scoreboard, oldscoreboard);
         }
-        newTable.appendChild(tr);
-    }
-
-    oldTable.parentNode.replaceChild(newTable, oldTable);
+    );
 }
 
 $( document ).ready(
     function() {
-        setInterval(build_scoreboard, 3000);
+        build_scoreboard();
+        setInterval(build_scoreboard, 1000);
     }
 );
 
+/*
 <table>
         <thead>
           <tr>
@@ -68,3 +71,4 @@ $( document ).ready(
           </tr>
         </tbody>
       </table>
+*/

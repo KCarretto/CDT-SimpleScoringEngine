@@ -29,6 +29,7 @@ class Check(db.Document):
     def get_document(self):
         return {
             'check_type': self.check_type,
+            'check_status': 'Passed' if self.passed else 'Failed' if self.status is not None else 'Frozen',
             'ip_addr': self.ip_addr,
             'points': self.points,
             'passed': self.passed,
