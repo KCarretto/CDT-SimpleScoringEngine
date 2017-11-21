@@ -27,11 +27,12 @@ COLLECTION_CHECKS = 'Checks'
 
 # Scoreboard Settings
 SCORED_CHECKS = [
-    'AD',
+    'LDAP',
     'DNS',
     'HTTP',
-    'FTP',
     'SSH',
+    'FTP',
+    'SMTP',
     'ICMP',
 ]
 

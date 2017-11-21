@@ -3,8 +3,8 @@ This module contains settings for the engine configuration.
 """
 
 # Engine Settings
-CHECK_DELAY = 5
-CHECK_DELTA = 1
+CHECK_DELAY = 60
+CHECK_DELTA = 20
 CHECK_TIMEOUT = 5
 
 # HTTP Check Settings

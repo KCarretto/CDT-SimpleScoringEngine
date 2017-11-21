@@ -51,7 +51,7 @@ function build_scoreboard() {
 $( document ).ready(
     function() {
         build_scoreboard();
-        setInterval(build_scoreboard, 1000);
+        setInterval(build_scoreboard, 15000);
     }
 );
 
