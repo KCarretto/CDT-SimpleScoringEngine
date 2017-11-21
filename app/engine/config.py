@@ -34,6 +34,15 @@ SMTP_POINTS = 50
 SMTP_USER = 50
 SMTP_PASSWORD = 'changeme'
 
+
+# LDAP Check Settings
+LDAP_SERVER = '8.8.8.8'
+LDAP_POINTS = 50
+LDAP_USER ='administrator'
+LDAP_PASSWORD = 'changeme'
+LDAP_BASEDN = ''
+LDAP_USERDN = ''
+
 # ICMP Check Settings
 ICMP_SERVERS = [HTTP_SERVER, DNS_SERVER]
 ICMP_POINTS = 10
