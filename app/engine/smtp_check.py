@@ -1,5 +1,5 @@
 """
-A module for checking Mail uptime.
+A module for checking SMTP uptime.
 """
 from smtplib import SMTP
 from email.mime.text import MIMEText
