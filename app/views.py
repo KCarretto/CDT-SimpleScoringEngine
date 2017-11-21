@@ -6,12 +6,46 @@ from .models.log import Log
 from .models.check import Check
 from .config import MAX_RESULTS, SCORED_CHECKS
 from flask import request, jsonify, render_template
+from threading import Thread, Event
+from engine.engine import Engine
+
+threads = []
+event = Event()
+
+frozen = True
+
 
 @app.route('/')
 @app.route('/home')
 @app.route('/scoreboard')
 def home():
     return render_template("scoreboard.html")
+
+
+@app.route('/api/start')
+def start_threads():
+    global frozen
+    if not frozen:
+        return 'Already running'
+    frozen = False
+
+    for i in range(1):
+        e = Engine(event=event, tid=i)
+        e.start()
+        threads.append(e)
+    return 'Started'
+
+@app.route('/api/stop')
+def stop_threads():
+    global frozen
+    if frozen:
+        return 'Not running'
+    event.set()
+    for t in threads:
+        t.join()
+    frozen = True
+
+    return 'Stopped'
 
 @app.route('/api/logs', methods=['POST', 'GET'])
 def api_logs():
@@ -79,10 +113,12 @@ def api_checks():
 
 @app.route('/api/round/')
 def api_round():
+    global frozen
+
     checks = []
     for check in SCORED_CHECKS:
         last_round = Check.objects(check_type=check).order_by('-id').first()
-        if last_round is None:
+        if last_round is None or frozen:
             checks.append(
                 {
                     'check_type': check,
@@ -92,7 +128,6 @@ def api_round():
                 })
         else:
             checks.append(last_round.get_document())
-
     resp = {
         'status': 200,
         'checks': checks,

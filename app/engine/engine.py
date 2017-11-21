@@ -54,12 +54,25 @@ class Engine(Thread):
         self.event = event
         self.tid = tid
 
+    def flush_checks(self, threads):
+        # Wait for checks to complete
+        for t in threads:
+            t.join()
+
+        info("All checks completed", "engine")
+
     def run(self):
         if CHECK_DELAY <= CHECK_DELTA:
             print("ERROR: CHECK_DELAY must be greater than CHECK_DELTA")
 
         while True:
             threads = []
+
+            # Handle stopping
+            if self.event.wait(3):
+                info("Stopping scoring engine", "engine")
+                self.flush_checks(threads)
+                break
 
             # HTTP Check Thread
             info("Spawning HTTP check worker", "engine")
@@ -91,11 +104,7 @@ class Engine(Thread):
             icmpCheck.start()
             threads.append(icmpCheck)
 
-            # Wait for checks to complete
-            for t in threads:
-                t.join()
-
-            info("All checks completed", "engine")
+            self.flush_checks(threads)
 
             delta = random.randrange(-CHECK_DELTA, CHECK_DELTA)
             time.sleep(CHECK_DELAY + delta)
