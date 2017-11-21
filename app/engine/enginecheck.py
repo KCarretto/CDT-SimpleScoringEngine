@@ -18,6 +18,8 @@ class EngineCheck(object):
         self.ip_addr = ip_addr
         self.points = points
 
+        info("Running check {} on {}".format(self.check_type, self.ip_addr), "engine")
+
     def run_check(self):
         """
         The entry point to run the check. This should return true if the check passes,
@@ -41,7 +43,8 @@ class EngineCheck(object):
             points=self.points,
             ip_addr=self.ip_addr,
             passed=passed,
+            status=status
         )
         c.save()
 
-        info("Submitted check ({}|{})".format(self.check_type, passed))
+        info("Submitted check {} on {} | passed: {}".format(self.check_type, self.ip_addr, passed), "engine")

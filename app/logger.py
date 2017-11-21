@@ -1,4 +1,7 @@
+import time
+
 from .config import LOG_LEVEL
+from .models.log import Log
 
 def debug(msg, application=None):
     if LOG_LEVEL.lower() == 'debug':
@@ -22,3 +25,8 @@ def crit(msg, application=None):
 
 def _log(level, msg, application=None):
     print("{}:{}:\t{}".format(level, application, msg))
+    l = Log(
+        timestamp=time.time(),
+        application=application,
+        level=level,
+    )
