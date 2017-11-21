@@ -24,10 +24,22 @@ function build_scoreboard() {
             for (i in json.checks) {
                 header = document.createElement("th");
                 header.innerText = json.checks[i].check_type;
+                header.style.fontSize = "xx-large"
                 tableheadrow.appendChild(header);
 
                 statusNode = document.createElement("td");
                 statusNode.innerText = json.checks[i].check_status;
+                statusNode.style.fontSize = "x-large"
+                if (statusNode.innerText == "Frozen") {
+                    statusNode.style.backgroundColor = "#03A9F4"
+                } else if (statusNode.innerText == "Passed") {
+                    statusNode.style.backgroundColor = "#4CAF50"
+                }
+                else {
+                    statusNode.style.backgroundColor = "#b71c1c"                    
+                }
+                statusNode.style.borderColor = "#424242"
+                statusNode.style.borderWidth = "thick"
                 tablestatusrow.appendChild(statusNode);
             }
 
