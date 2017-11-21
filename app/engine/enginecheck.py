@@ -32,7 +32,7 @@ class EngineCheck(object):
 
     def submit(self, passed, status=None):
         """
-        Submit the results of a check. 
+        Submit the results of a check.
         passed: True or False, whether the check suceeded or not.
         status: A message describing why the check failed. If the check passed, you may leave this as None.
         """
@@ -46,6 +46,6 @@ class EngineCheck(object):
             passed=passed,
             status=status
         )
+        info("Submitting check {} on {} | passed: {}".format(self.check_type, self.ip_addr, passed), "engine")
         c.save()
 
-        info("Submitted check {} on {} | passed: {}".format(self.check_type, self.ip_addr, passed), "engine")

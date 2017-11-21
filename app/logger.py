@@ -20,9 +20,10 @@ def crit(msg, application=None):
         _log("crit", msg, application)
 
 def _log(level, msg, application=None):
-    print("{}:{}:\t{}".format(level, application, msg))
+    timestamp = time.time()
+    print("[{}]{}:{}:\t{}".format(timestamp, level, application, msg))
     l = Log(
-        timestamp=time.time(),
+        timestamp=timestamp,
         application=application,
         level=level,
     )

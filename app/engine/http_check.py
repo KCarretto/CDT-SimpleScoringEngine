@@ -8,7 +8,7 @@ from enginecheck import EngineCheck
 class HTTPCheck(EngineCheck):
     def __init__(self, ip_addr, points, uri):
         self.uri = uri
-        EngineCheck.__init__('HTTP', ip_addr, points)
+        EngineCheck.__init__(self, 'HTTP', ip_addr, points)
     
     def run_check(self):
         try:
