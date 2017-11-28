@@ -34,6 +34,7 @@ SCORED_CHECKS = [
     'FTP',
     'SMTP',
     'ICMP',
+    'Postgres',
 ]
 
 

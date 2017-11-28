@@ -17,6 +17,7 @@ from config import FTP_SERVER, FTP_POINTS, FTP_USER, FTP_PASSWORD
 from config import SMTP_SERVER, SMTP_POINTS, SMTP_USER, SMTP_PASSWORD
 from config import LDAP_SERVER, LDAP_POINTS, LDAP_USER, LDAP_PASSWORD, LDAP_BASEDN, LDAP_USERDN
 from config import ICMP_SERVERS, ICMP_POINTS
+from config import PG_SERVERS, PG_USER, PG_DB, PG_PASSWORD, PG_POINTS
 
 from http_check import HTTPCheck 
 from dns_check import DNSCheck
@@ -25,6 +26,7 @@ from ftp_check import FTPCheck
 from smtp_check import SMTPCheck
 from ldap_check import LDAPCheck
 from icmp_check import ICMPCheck
+from postgres_check import PostgresCheck
 
 class Worker (Thread):
     def __init__(self, check_class, ip_addr, points, **kwargs):
@@ -122,6 +124,12 @@ class Engine(Thread):
             icmpCheck = Worker(ICMPCheck, ICMP_SERVERS, ICMP_POINTS)
             icmpCheck.start()
             threads.append(icmpCheck)
+
+            # Postgres Check Thread
+            info("Spawning Postgres check worker", "engine")
+            pgCheck = Worker(PostgresCheck, PG_SERVERS, PG_POINTS, user=PG_USER, dbname=PG_DB, password=PG_PASSWORD)
+            pgCheck.start()
+            threads.append(pgCheck)
 
             self.flush_checks(threads)
 
