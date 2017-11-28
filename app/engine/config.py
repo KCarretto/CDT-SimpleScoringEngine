@@ -46,3 +46,10 @@ LDAP_USERDN = ''
 # ICMP Check Settings
 ICMP_SERVERS = [HTTP_SERVER, DNS_SERVER]
 ICMP_POINTS = 10
+
+# Postgres Settings
+PG_SERVERS = ''
+PG_POINTS = 50
+PG_DB = 'chuckecheeses'
+PG_USER = 'admin'
+PG_PASSWORD = 'password'
